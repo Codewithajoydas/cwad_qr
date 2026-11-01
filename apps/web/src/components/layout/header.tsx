@@ -1,16 +1,46 @@
 import React, { useCallback, useState } from "react";
-import { QrCode, Menu, X } from "lucide-react";
+import { QrCode, Menu, X, ScanQrCode, StarPlus, Info } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { getDeviceType } from "@/lib/getDeviceType";
-import { Link } from "react-router-dom";
-const navigation = [
-  { name: "Generator", href: "/", supportedDevices: ["desktop", "tablet", "mobile"] },
-  { name: "Scanner", href: "/scanner", supportedDevices: ["desktop", "tablet", "mobile"] },
-  { name: "Features", href: "/features", supportedDevices: ["desktop", "tablet", "mobile"] },
-  { name: "About", href: "/about", supportedDevices: ["desktop", "tablet", "mobile"] },
+import { Link, useLocation } from "react-router-dom";
+
+type navigationType = {
+  name: string;
+  href: string;
+  supportedDevices: string[];
+  icon: LucideIcon;
+};
+
+const navigation: navigationType[] = [
+  {
+    name: "Generator",
+    href: "/",
+    supportedDevices: ["desktop", "tablet", "mobile"],
+    icon: QrCode,
+  },
+  {
+    name: "Scanner",
+    href: "/scanner",
+    supportedDevices: ["desktop", "tablet", "mobile"],
+    icon: ScanQrCode,
+  },
+  {
+    name: "Features",
+    href: "/features",
+    supportedDevices: ["desktop", "tablet", "mobile"],
+    icon: StarPlus,
+  },
+  {
+    name: "About",
+    href: "/about",
+    supportedDevices: ["desktop", "tablet", "mobile"],
+    icon: Info,
+  },
 ];
 export default function Header() {
+  const { pathname } = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const closeMenu = () => setIsMenuOpen(false);
   const deviceType = useCallback(() => getDeviceType(), []);
@@ -23,7 +53,7 @@ export default function Header() {
             <QrCode size={22} />
           </div>
           <div className="flex flex-col">
-            <span className="text-lg font-bold tracking-tight">QR Studio</span>
+            <span className="text-lg font-bold tracking-tight">Cwad QR</span>
             <span className="text-[10px] leading-none text-muted-foreground">
               Create. Customize. Connect.
             </span>
@@ -37,8 +67,13 @@ export default function Header() {
               <Link
                 key={item.name}
                 to={item.href}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                style={{
+                  backgroundColor: pathname === item.href ? "rgba(0, 0, 0, 0.04)" : "transparent",
+                  color: pathname === item.href ? "black" : "#999",
+                }}
+                className="text-sm p-2 rounded-[10px] font-medium text-muted-foreground transition-colors hover:text-foreground flex gap-2 active:scale-[1.02] transition-all duration-200 hover:shadow-sm"
               >
+                <item.icon size={20} />
                 {item.name}
               </Link>
             ))}
@@ -80,14 +115,19 @@ export default function Header() {
             {navigation
               .filter((item) => item.supportedDevices.includes(deviceType()))
               .map((item) => (
-                <a
+                <Link
                   key={item.name}
-                  href={item.href}
+                  to={item.href}
                   onClick={closeMenu}
-                  className="rounded-lg px-3 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  style={{
+                    backgroundColor: pathname === item.href ? "rgba(0, 0, 0, 0.1)" : "transparent",
+                    color: pathname === item.href ? "black" : "#999",
+                  }}
+                  className="rounded-lg px-3 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground flex gap-2"
                 >
+                  <item.icon size={20} className="mr-2 inline-block" />
                   {item.name}
-                </a>
+                </Link>
               ))}
             <Separator className="my-3" />
           </nav>

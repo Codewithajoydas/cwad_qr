@@ -4,6 +4,8 @@ import { Routes, Route } from "react-router-dom";
 // @ts-ignore
 import "./styles.css";
 import Scanner from "@/pages/Scanner";
+import About from "@/pages/About";
+import Features from "@/pages/Features";
 
 export default function App() {
   return (
@@ -12,7 +14,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<GenerateQRPage />} />
         <Route path="/scanner" element={<Scanner />} />
-        <Route path="/" element={<Scanner />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/features" element={<Features />} />
       </Routes>
     </>
   );
