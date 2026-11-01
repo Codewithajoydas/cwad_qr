@@ -1,13 +1,19 @@
-import { HomePage } from "@/pages/HomePage";
+import { GenerateQRPage } from "@/pages/GenerateQR";
+import Header from "@/components/layout/header";
+import { Routes, Route } from "react-router-dom";
 // @ts-ignore
 import "./styles.css";
-import Header from "@/components/layout/header";
+import Scanner from "@/pages/Scanner";
 
 export default function App() {
   return (
     <>
       <Header />
-      <HomePage />
+      <Routes>
+        <Route path="/" element={<GenerateQRPage />} />
+        <Route path="/scanner" element={<Scanner />} />
+        <Route path="/" element={<Scanner />} />
+      </Routes>
     </>
   );
 }

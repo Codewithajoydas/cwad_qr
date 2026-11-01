@@ -319,7 +319,7 @@ function downloadBlob(blob: Blob, filename: string) {
   URL.revokeObjectURL(url);
 }
 
-export function HomePage() {
+export function GenerateQRPage() {
   const [selectedType, setSelectedType] = useState("Link");
   const [formValues, setFormValues] = useState<FormValues>({});
 
