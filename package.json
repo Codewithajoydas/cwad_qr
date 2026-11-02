@@ -24,7 +24,11 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.3",
-    "tailwindcss": "^4.3.3"
+    "@tailwindcss/vite": "^4.3.3"
+  },
+  "overrides": {
+    "react-native-css-interop": {
+      "tailwindcss": "3.4.17"
+    }
   }
 }
